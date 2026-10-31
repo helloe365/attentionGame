@@ -1,0 +1,49 @@
+<view class="page">
+  <block wx:if="{{phase === 'ready'}}">
+    <view class="title">多目标追踪</view>
+    <view class="subtitle tracking-subtitle">记住目标，跟住它们的移动。</view>
+    <view wx:if="{{notice}}" class="notice">{{notice}}</view>
+    <view class="tracking-preview" aria-hidden="true">
+      <view class="preview-dot d1 target"></view><view class="preview-dot d2"></view>
+      <view class="preview-dot d3 target"></view><view class="preview-dot d4"></view>
+      <view class="preview-dot d5"></view><view class="preview-dot d6 target"></view>
+    </view>
+    <view class="section-label">题目数量</view>
+    <view class="chips tracking-options round-options">
+      <button wx:for="{{roundOptions}}" wx:key="*this" class="chip {{roundCount === item ? 'selected' : ''}}"
+        data-rounds="{{item}}" bindtap="onRounds" hover-class="pressed" aria-label="{{item}} 题{{roundCount === item ? '，已选中' : ''}}">{{item}} 题</button>
+    </view>
+    <view class="section-label">需要追踪的目标数</view>
+    <view class="chips tracking-options target-options">
+      <button wx:for="{{targetOptions}}" wx:key="*this" class="chip {{targetCount === item ? 'selected' : ''}}"
+        data-targets="{{item}}" bindtap="onTargets" hover-class="pressed" aria-label="{{item}}个目标{{targetCount === item ? '，已选中' : ''}}">{{item}} 个</button>
+    </view>
+    <view class="rule">10 个小球中，高亮的 {{targetCount}} 个是目标。记住 2 秒，跟踪 8 秒，停止后选出它们。共 {{roundCount}} 轮，目标越多，移动越快。</view>
+    <button class="primary start-button" bindtap="onStart" hover-class="pressed">开始</button>
+    <view class="prepare-footnote">切后台或锁屏将中断本局。</view>
+  </block>
+
+  <block wx:elif="{{phase === 'running'}}">
+    <view class="play-header">
+      <view class="play-hint">第 <text class="play-target">{{round}}</text> / {{roundCount}} 轮</view>
+      <view wx:if="{{countdown}}" class="play-clock numbers">{{countdown}}<text>秒</text></view>
+      <view wx:elif="{{stage === 'select'}}" class="selection-count">已选 {{selectedCount}}/{{targetCount}}</view>
+    </view>
+    <view class="stage-title">{{stageTitle}}</view>
+    <view class="canvas-wrap" style="width:{{canvasSize}}px;height:{{canvasSize}}px;">
+      <canvas id="tracking-canvas" type="2d" style="width:{{canvasSize}}px;height:{{canvasSize}}px;" bindtouchstart="onCanvasTouch" aria-label="多目标追踪画布"></canvas>
+    </view>
+    <view class="stage-hint">{{stageHint}}</view>
+    <block wx:if="{{stage === 'select'}}">
+      <view class="dot-choices">
+        <button wx:for="{{choices}}" wx:key="id" class="dot-choice {{item.selected ? 'selected' : ''}}" data-id="{{item.id}}" bindtap="onChoice" hover-class="pressed"
+          aria-label="{{item.label}}号小球{{item.selected ? '，已选中' : ''}}">{{item.label}}</button>
+      </view>
+      <button class="primary submit-button" disabled="{{selectedCount !== targetCount}}" bindtap="onSubmit" hover-class="pressed">提交选择</button>
+    </block>
+    <button wx:elif="{{stage === 'feedback'}}" class="primary next-round" bindtap="onNext" hover-class="pressed">下一轮</button>
+    <view class="end-row"><button class="text-button" bindtap="onEnd" hover-class="pressed">结束本局</button></view>
+  </block>
+
+  <result-panel wx:else id="result-panel" result="{{result}}" bind:again="onStart" bind:settings="onSettings" bind:retry="onRetrySave" />
+</view>

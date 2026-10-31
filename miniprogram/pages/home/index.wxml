@@ -1,0 +1,24 @@
+<view class="page home-page">
+  <view class="home-hero">
+    <image class="home-banner" src="/assets/images/home/focus-banner.jpg" mode="aspectFill" aria-hidden="true" />
+    <view class="home-hero-content">
+      <view class="row home-heading">
+        <view class="title">舒尔特方格</view>
+        <button class="text-button history-link" hover-class="pressed" bindtap="onHistory">训练记录</button>
+      </view>
+      <view class="subtitle home-intro">从一个数字开始，把注意力放回眼前。</view>
+    </view>
+  </view>
+  <view class="mode-grid">
+    <button wx:for="{{modes}}" wx:key="id" data-mode="{{item.id}}" bindtap="onModeTap"
+      class="mode-card {{item.id === 'classic' ? 'featured' : ''}} {{item.id === 'more' ? 'more-card' : ''}}"
+      hover-class="pressed" aria-label="{{item.name}}，{{item.short}}">
+      <view class="mode-title">{{item.name}}</view>
+      <view class="mode-description">{{item.short}}</view>
+      <view class="mode-mark" aria-hidden="true">
+        <image class="mode-icon" src="{{item.id === 'more' ? '/assets/images/icons/more-training.png' : '/assets/images/icons/schulte-' + item.id + '.png'}}" mode="aspectFit" />
+      </view>
+    </button>
+  </view>
+  <view class="home-note">选择玩法，点击开始。每一次训练都从零计时。</view>
+</view>

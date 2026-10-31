@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/more/index",
+    "pages/schulte/index",
+    "pages/task/index",
+    "pages/tracking/index",
+    "pages/history/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "注意力训练",
+    "navigationBarBackgroundColor": "#f5f7fc",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f7fc"
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

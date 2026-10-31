@@ -1,0 +1,4 @@
+{
+  "navigationBarTitleText": "舒尔特方格",
+  "usingComponents": { "result-panel": "../../components/result-panel/index" }
+}

@@ -1,0 +1,45 @@
+<view class="page">
+  <block wx:if="{{phase === 'ready'}}">
+    <view class="title">{{info.name}}</view>
+    <view class="subtitle task-subtitle">{{info.englishName}} · {{info.short}}</view>
+    <view wx:if="{{notice}}" class="notice">{{notice}}</view>
+    <view class="task-preview">
+      <view wx:if="{{game === 'stroop'}}" class="preview-word">红</view>
+      <view wx:elif="{{game === 'flanker'}}" class="preview-arrows">← ← → ← ←</view>
+      <view wx:elif="{{game === 'simon'}}" class="preview-shapes"><view class="shape circle blue"></view><view class="shape circle orange"></view></view>
+      <view wx:else class="preview-shapes"><view class="shape circle"></view><view class="shape square"></view></view>
+      <view class="preview-caption">{{game === 'stroop' ? '这个字是蓝色，应该选择“蓝”' : game === 'flanker' ? '中间指向右，应该选择“向右”' : game === 'simon' ? '蓝色选左，橙色选右' : '圆形点击，方形不操作'}}</view>
+    </view>
+    <view class="section-label">题目数量</view>
+    <view class="chips">
+      <button wx:for="{{countOptions}}" wx:key="*this" class="chip {{count === item ? 'selected' : ''}}"
+        data-count="{{item}}" bindtap="onCount" hover-class="pressed" aria-label="{{item}} 题{{count === item ? '，已选中' : ''}}">{{item}} 题</button>
+    </view>
+    <view class="rule">{{info.rule}}</view>
+    <button class="primary start-button" bindtap="onStart" hover-class="pressed">开始</button>
+    <view class="prepare-footnote">切后台或锁屏将中断本局。</view>
+  </block>
+
+  <block wx:elif="{{phase === 'running'}}">
+    <view class="play-header">
+      <view class="play-hint">第 <text class="play-target">{{trialNumber}}</text> / {{count}} 题</view>
+      <view class="play-clock numbers">{{elapsed}}<text>秒</text></view>
+    </view>
+    <view class="progress-track"><view class="progress-fill" style="width:{{progressWidth}}%;"></view></view>
+    <view class="stimulus-stage">
+      <view wx:if="{{visible && game === 'stroop'}}" class="stimulus-word" style="color:{{trial.color}};">{{trial.text}}</view>
+      <view wx:elif="{{visible && game === 'flanker'}}" class="stimulus-arrows">{{trial.text}}</view>
+      <view wx:elif="{{visible}}" class="shape {{trial.shape}} stimulus-shape {{game === 'simon' ? trial.side : 'center'}}" style="{{trial.color ? 'background:' + trial.color + ';' : ''}}"></view>
+      <view wx:else class="fixation" aria-label="等待下一题">+</view>
+    </view>
+    <view class="response-buttons {{game === 'stroop' ? 'four-buttons' : ''}} {{game === 'gonogo' ? 'one-button' : ''}}">
+      <button wx:for="{{buttons}}" wx:key="key" class="response-button" data-key="{{item.key}}"
+        style="color:{{item.filled ? '#ffffff' : item.color}};background:{{item.filled ? item.color : '#ffffff'}};border-color:{{item.color}};"
+        disabled="{{!inputEnabled}}" bindtap="onResponse" hover-class="pressed">{{item.label}}</button>
+    </view>
+    <view class="play-footer"><view>已完成 {{answered}}/{{count}}</view><view>错误 {{errors}}</view></view>
+    <view class="end-row"><button class="text-button" bindtap="onEnd" hover-class="pressed">结束本局</button></view>
+  </block>
+
+  <result-panel wx:else id="result-panel" result="{{result}}" bind:again="onStart" bind:settings="onSettings" bind:retry="onRetrySave" />
+</view>

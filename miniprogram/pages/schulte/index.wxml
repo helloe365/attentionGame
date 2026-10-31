@@ -1,0 +1,49 @@
+<view class="page schulte-page {{phase === 'running' ? 'playing' : ''}}">
+  <block wx:if="{{phase === 'ready'}}">
+    <view class="title">{{mode.name}}</view>
+    <view class="subtitle prepare-subtitle">{{mode.short}}</view>
+    <view wx:if="{{notice}}" class="notice">{{notice}}</view>
+    <block wx:if="{{config.mode === 'patience'}}">
+      <view class="section-label">训练时限 <text class="fixed-spec">固定 5×5</text></view>
+      <view class="chips">
+        <button wx:for="{{durations}}" wx:key="id" class="chip {{config.seconds === item.id ? 'selected' : ''}}"
+          data-seconds="{{item.id}}" bindtap="onDuration" hover-class="pressed" aria-label="{{item.label}}{{config.seconds === item.id ? '，已选中' : ''}}">{{item.label}}</button>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="section-label">格子规格</view>
+      <view class="chips">
+        <button wx:for="{{specs}}" wx:key="id" class="chip spec-chip {{config.spec === item.id ? 'selected' : ''}}"
+          data-spec="{{item.id}}" bindtap="onSpec" hover-class="pressed" aria-label="{{item.label}}{{config.spec === item.id ? '，已选中' : ''}}">{{item.label}}</button>
+      </view>
+    </block>
+    <view class="rule">{{mode.rule}}</view>
+    <button class="primary start-button" bindtap="onStart" hover-class="pressed">开始</button>
+    <view class="prepare-footnote"><view>开始后计时，切后台或锁屏将中断本局。</view><view>日均与纪录按同模式、同规格分别统计。</view></view>
+  </block>
+
+  <block wx:elif="{{phase === 'running'}}">
+    <view class="play-header">
+      <view class="play-hint" wx:if="{{config.mode === 'arithmetic'}}">第 <text class="play-target">{{progress + 1}}</text> / {{total}} 题</view>
+      <view class="play-hint" wx:else>下一个<text class="play-target">{{target}}</text></view>
+      <view class="play-clock numbers">{{config.mode === 'patience' ? remaining : elapsed}}<text>{{config.mode === 'patience' ? '秒剩余' : '秒'}}</text></view>
+    </view>
+    <view class="board-stage">
+      <view wx:if="{{config.mode === 'arithmetic'}}" class="equation numbers">{{equation}} = ?</view>
+      <view class="board {{letter ? 'letter-board' : ''}}" style="width:{{boardSize}}px;">
+        <button wx:for="{{cells}}" wx:key="index" class="grid-cell numbers {{item.dimmed ? 'dimmed' : ''}} {{wrongIndex === index ? 'wrong' : correctIndex === index ? 'correct' : ''}}"
+          style="width:{{cellSize}}px;height:{{cellSize}}px;font-size:{{fontSize}}px;{{item.tail ? 'margin-left:33.333333%;' : ''}}"
+          data-index="{{index}}" data-revision="{{revision}}" data-value="{{item.value}}" bindtap="onTile"
+          hover-class="tile-pressed" hover-stay-time="70" aria-label="{{item.value}}{{item.dimmed ? '，已完成' : ''}}">{{item.value}}</button>
+      </view>
+    </view>
+    <view class="play-footer">
+      <view wx:if="{{config.mode === 'patience'}}">完成 {{rounds}} 轮 · 本轮 {{progress}}/25</view>
+      <view wx:else>完成 {{progress}}/{{total}}</view>
+      <view class="{{wrongIndex >= 0 ? 'error-count' : ''}}">错误 {{errors}}</view>
+    </view>
+    <view class="end-row"><button class="text-button" bindtap="onEnd" hover-class="pressed">结束本局</button></view>
+  </block>
+
+  <result-panel wx:else id="result-panel" result="{{result}}" bind:again="onStart" bind:settings="onSettings" bind:retry="onRetrySave" />
+</view>

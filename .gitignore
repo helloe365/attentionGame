@@ -1,0 +1,17 @@
+# Local tools, screenshots, and validation output
+/.agents/
+/.playwright-mcp/
+/output/
+/xiaohongshu-validation.md
+/miniprogram/assets/images/QRCode/
+*.skill
+*.zip
+
+# Dependencies, local settings, and credentials
+node_modules/
+project.private.config.json
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db

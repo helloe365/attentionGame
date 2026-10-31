@@ -1,0 +1,52 @@
+.history-subtitle { margin: 8px 0 22px; }
+.empty-illustration { display: block; width: 152px; height: 114px; margin: -10px auto 14px; border-radius: 18px; }
+.filters { display: flex; flex-wrap: wrap; margin: -5px; }
+.filters picker { flex: 1; min-width: 96px; margin: 5px; }
+.filter-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(29, 48, 82, 0.03);
+  font-size: 14px;
+}
+.filter-control text { margin-left: 8px; color: var(--muted); }
+.history-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 20px 0 12px;
+  padding: 10px 12px;
+  background: var(--blue-light);
+  border-radius: 12px;
+  color: var(--blue);
+  font-size: 12px;
+}
+.history-summary text { margin-left: 0; color: var(--muted); }
+.record-row {
+  display: block;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+.record-top, .record-main { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.record-name { font-size: 16px; font-weight: 650; }
+.record-badge { flex-shrink: 0; padding: 3px 8px; background: var(--teal-light); border-radius: 7px; color: var(--teal); font-size: 11px; }
+.record-time, .record-extra { color: var(--muted); font-size: 12px; }
+.record-main { margin-top: 10px; }
+.record-value { color: var(--blue); font-size: 20px; font-weight: 650; white-space: nowrap; }
+.record-value.incomplete { color: var(--muted); font-size: 15px; }
+.record-extra { margin-top: 6px; }
+.back-list { justify-content: flex-start; padding-left: 0; }
+.load-more { margin: 14px auto; }

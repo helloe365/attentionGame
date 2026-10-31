@@ -1,0 +1,27 @@
+<view wx:if="{{result}}" class="result">
+  <view class="result-title">{{result.title}}</view>
+  <view class="subtitle">{{result.subtitle}}</view>
+  <image wx:if="{{result.isBest}}" class="result-best-image" src="/assets/images/states/result-best.png" mode="aspectFit" lazy-load="true" aria-hidden="true" />
+  <view class="result-hero numbers">{{result.hero}}<text>{{result.unit}}</text></view>
+  <view class="result-caption">{{result.caption}}</view>
+  <view class="best-slot"><text wx:if="{{result.isBest}}" class="best-tag">本次最佳</text></view>
+  <view class="metrics">
+    <view wx:for="{{result.metrics}}" wx:key="label" class="metric">
+      <view class="metric-label">{{item.label}}</view>
+      <view class="metric-value numbers">{{item.value}}<text>{{item.unit}}</text></view>
+    </view>
+  </view>
+  <view wx:if="{{result.saveError}}" class="notice error-notice">
+    <view>{{result.saveError}}</view>
+    <button class="text-button retry-save" bindtap="retry" hover-class="pressed">重试保存与读取</button>
+  </view>
+  <view wx:if="{{result.details.length}}" class="details">
+    <view wx:for="{{result.details}}" wx:key="*this">{{item}}</view>
+  </view>
+  <button class="primary again-button" bindtap="again" hover-class="pressed">再来一次</button>
+  <button class="secondary settings-button" bindtap="settings" hover-class="pressed">{{result.settingsLabel}}</button>
+  <view class="result-links">
+    <button class="text-button" bindtap="history" hover-class="pressed">训练记录</button>
+    <button class="text-button" bindtap="home" hover-class="pressed">返回首页</button>
+  </view>
+</view>

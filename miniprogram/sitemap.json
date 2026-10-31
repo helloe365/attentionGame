@@ -1,0 +1,4 @@
+{
+  "desc": "本地认知训练",
+  "rules": [{ "action": "allow", "page": "*" }]
+}

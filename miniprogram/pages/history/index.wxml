@@ -1,0 +1,40 @@
+<view class="page">
+  <block wx:if="{{!detail}}">
+    <view class="title">训练记录</view>
+    <view class="subtitle history-subtitle">按模式与规格，查看每次训练的成绩。</view>
+    <view class="filters">
+      <picker range="{{gameOptions}}" range-key="name" value="{{gameIndex}}" bindchange="onGame">
+        <view class="filter-control">{{gameOptions[gameIndex].name}}<text>⌄</text></view>
+      </picker>
+      <picker wx:if="{{gameOptions[gameIndex].id === 'schulte'}}" range="{{modeOptions}}" range-key="name" value="{{modeIndex}}" bindchange="onMode">
+        <view class="filter-control">{{modeOptions[modeIndex].name}}<text>⌄</text></view>
+      </picker>
+      <picker wx:if="{{gameOptions[gameIndex].id === 'schulte' && modeOptions[modeIndex].id !== 'patience'}}"
+        range="{{specOptions}}" range-key="label" value="{{specIndex}}" bindchange="onSpec">
+        <view class="filter-control">{{specOptions[specIndex].label}}<text>⌄</text></view>
+      </picker>
+      <picker wx:if="{{gameOptions[gameIndex].id === 'schulte' && modeOptions[modeIndex].id === 'patience'}}"
+        range="{{timeOptions}}" range-key="label" value="{{timeIndex}}" bindchange="onTime">
+        <view class="filter-control">{{timeOptions[timeIndex].label}}<text>⌄</text></view>
+      </picker>
+    </view>
+    <view wx:if="{{error}}" class="notice error-notice">{{error}}<button class="text-button" bindtap="onRefresh" hover-class="pressed">重试读取</button></view>
+    <view wx:else class="history-summary">今日完成 {{todayCount}} 局 <text>累计完成 {{totalCount}} 局</text></view>
+    <view wx:if="{{!rows.length && !error}}" class="empty">
+      <image class="empty-illustration" src="/assets/images/states/history-empty.png" mode="aspectFit" lazy-load="true" aria-hidden="true" />
+      <view class="empty-title">这里还没有训练记录</view>
+      <view class="subtitle">完成一次训练，成绩就会出现在这里。</view>
+      <button class="primary" bindtap="onHome" hover-class="pressed">选择训练</button>
+    </view>
+    <button wx:for="{{rows}}" wx:key="id" class="record-row" data-id="{{item.id}}" bindtap="onDetail" hover-class="pressed">
+      <view class="record-top"><view class="record-name">{{item.title}}</view><view wx:if="{{item.best}}" class="record-badge">纪录</view></view>
+      <view class="record-main"><view class="record-time">{{item.time}}</view><view class="record-value {{item.status !== 'completed' ? 'incomplete' : ''}}">{{item.value}}</view></view>
+      <view class="record-extra">{{item.extra}}</view>
+    </button>
+    <button wx:if="{{hasMore}}" class="text-button load-more" bindtap="onMore" hover-class="pressed">查看更多</button>
+  </block>
+  <block wx:else>
+    <button class="text-button back-list" bindtap="onBackList" hover-class="pressed">返回记录列表</button>
+    <result-panel id="result-panel" result="{{detail}}" bind:again="onPlay" bind:settings="onBackList" bind:history="onBackList" bind:retry="onRefresh" />
+  </block>
+</view>

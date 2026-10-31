@@ -1,0 +1,48 @@
+.result { padding-top: 4px; text-align: center; }
+.result-title { margin: 8px 0 6px; font-size: 26px; font-weight: 650; }
+.result-hero { margin-top: 24px; color: var(--blue); font-size: 56px; font-weight: 650; letter-spacing: -1px; line-height: 1.2; }
+.result-hero text { margin-left: 7px; font-size: 16px; font-weight: 400; letter-spacing: 0; }
+.result-caption { margin-top: 10px; color: var(--muted); font-size: 14px; }
+.result-best-image { display: block; width: 112px; height: 84px; margin: 14px auto -6px; border-radius: 16px; }
+.result-best-image + .result-hero { margin-top: 12px; }
+.best-slot { min-height: 42px; padding-top: 9px; }
+.best-tag { display: inline-block; padding: 4px 11px; background: var(--teal-light); border-radius: 8px; color: var(--teal); font-size: 12px; font-weight: 600; }
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+.metric { width: 50%; min-height: 96px; padding: 18px 8px; }
+.metric:nth-child(odd) { border-right: 1px solid var(--line); }
+.metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+.metric-label { margin-bottom: 8px; color: var(--muted); font-size: 13px; }
+.metric-value { font-size: 22px; font-weight: 650; overflow-wrap: anywhere; }
+.metric-value text { margin-left: 4px; color: var(--muted); font-size: 12px; font-weight: 400; }
+.details {
+  margin: 18px 0 20px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: left;
+}
+.details view { margin-bottom: 4px; }
+.details view:last-child { margin-bottom: 0; }
+.again-button, .settings-button { width: 100%; }
+.again-button { margin-top: 20px; }
+.settings-button { margin-top: 12px; }
+.result-links { display: flex; justify-content: center; gap: 20px; margin-top: 8px; }
+.retry-save { margin: 4px auto 0; color: var(--red); }
+
+@media (max-width: 350px) {
+  .result-hero { font-size: 48px; }
+  .metric-value { font-size: 20px; }
+  .result-links { gap: 12px; }
+}
