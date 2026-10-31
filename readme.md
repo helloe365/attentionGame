@@ -1,5 +1,7 @@
 # Attention Training
 
+[简体中文](readme_zh.md)
+
 A lightweight attention-training app for daily practice. It includes Schulte-table exercises, cognitive interference tasks, multiple-object tracking, and locally stored training history. The repository currently contains the WeChat Mini Program source and a deployable static H5 build.
 
 ## Features
